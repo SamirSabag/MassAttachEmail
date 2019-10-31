@@ -41,6 +41,7 @@ namespace MassAttachEmail
         {
             try
             {
+
                 // Create the Outlook application.
                 Outlook.Application oApp = new Outlook.Application();
                 // Create a new mail item.
@@ -54,7 +55,7 @@ namespace MassAttachEmail
                 int iAttachType = (int)Outlook.OlAttachmentType.olByValue;
                 //now attached the file
                 Outlook.Attachment oAttach = oMsg.Attachments.Add
-                                             (filePath, iAttachType, iPosition, sDisplayName);                
+                                             (filePath + "\\" + fileName, iAttachType, iPosition, sDisplayName);                
                 //Subject line
                 oMsg.Subject = tbSubject.Text;
                 // Add a recipient.
@@ -84,7 +85,7 @@ namespace MassAttachEmail
                 Outlook.Application oApp = new Outlook.Application();
                 // Create a new mail item.
                 Outlook.MailItem oMsg = (Outlook.MailItem)oApp.CreateItem(Outlook.OlItemType.olMailItem);
-                // Set HTMLBody. 
+                // Set HTMLBody.                
                 //add the body of the email
                 oMsg.HTMLBody = tbBody.Text + "\r\n" + signature;
                 //Add an attachment.
@@ -212,14 +213,27 @@ namespace MassAttachEmail
             string fileName;
             string filePath;
             string email;
+            string subject;
             for (int i = 0; i < dtMapping.Rows.Count; i++)
             {
                 fileName = dtMapping.Rows[i][0].ToString();
                 filePath = dtMapping.Rows[i][1].ToString();
                 email = dtMapping.Rows[i][2].ToString();
+                subject = dtMapping.Rows[i][3].ToString();
 
-                SendEMailThroughOutlook(dtMapping.Rows[i][1].ToString(), @"C:\Packages\Folder1\9008879949.PDF", "samir.sabag.olague@gmail.com");
+                var files = Directory
+                .EnumerateFiles(filePath, "*", SearchOption.AllDirectories)
+                .Select(Path.GetFileName).ToList(); // <-- note you can shorten the lambda
+
+                foreach (var file in files)
+                {
+                    SendEMailThroughOutlook(file, filePath, "samir.sabag.olague@hp.com");
+                }
+
+
+                
             }
+
             //try
             //{
             //    SendEMailThroughOutlook("9008879949", @"C:\Packages\Folder1\9008879949.PDF", "samir.sabag.olague@gmail.com");
