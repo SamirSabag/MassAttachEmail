@@ -134,6 +134,7 @@
             this.tbSubject.Name = "tbSubject";
             this.tbSubject.Size = new System.Drawing.Size(350, 26);
             this.tbSubject.TabIndex = 9;
+            this.tbSubject.Visible = false;
             // 
             // tbBody
             // 
@@ -174,6 +175,7 @@
             this.lblSubject.Size = new System.Drawing.Size(107, 20);
             this.lblSubject.TabIndex = 5;
             this.lblSubject.Text = "Email subject";
+            this.lblSubject.Visible = false;
             // 
             // txtLoggText
             // 

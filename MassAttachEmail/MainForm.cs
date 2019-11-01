@@ -12,7 +12,6 @@ using System.Windows.Forms;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using System.Reflection;
 
-
 namespace MassAttachEmail
 {
     public partial class MainForm : Form
@@ -26,7 +25,7 @@ namespace MassAttachEmail
         public MainForm()
         {
             InitializeComponent();
-            txtLoggText.Text += "To start upload the mapping table \r\n";
+            txtLoggText.Text += "Upload the mapping table to start \r\n";
             tbBody.Text = emailBody;
             tbSubject.Text = emailSubject;
             path = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Microsoft\Signatures";
@@ -71,7 +70,7 @@ namespace MassAttachEmail
                 oRecips = null;
                 oMsg = null;
                 oApp = null;
-                txtLoggText.Text += "email sent -> File:" + fileName +" FilePath: " + filePath + " to: " + email + "\r\n";
+                txtLoggText.Text += "email sent -> File: " + fileName +" FilePath: " + filePath + " sent to: " + email + "\r\n";
 
             }//end of try block
             catch (Exception ex)
@@ -113,7 +112,7 @@ namespace MassAttachEmail
                 oRecips = null;
                 oMsg = null;
                 oApp = null;
-                txtLoggText.Text += "email sent -> File:" + fileName + " FilePath: " + filePath + " to: " + email + "\r\n";
+                txtLoggText.Text += "email saved -> File: " + fileName + " FilePath: " + filePath + " sent to: " + email + "\r\n";
 
             }//end of try block
             catch (Exception ex)
@@ -266,8 +265,7 @@ namespace MassAttachEmail
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
 
-
-            //Properties.Settings.Default.EmailBody = (string)tbBody.Text;
+            Properties.Settings.Default.EmailBody = (string)tbBody.Text;
             Properties.Settings.Default.Save();
 
             //Properties.Settings.Default.EmailSubject = tbSubject.Text;
@@ -276,7 +274,7 @@ namespace MassAttachEmail
 
         private void BtnSaveEmails_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.DialogResult dialog = MessageBox.Show("This action will send the emails to the APs contained in this report, this action cannot be undone, are you sure you want to continue?", "Send emails confirm", MessageBoxButtons.YesNo);
+            System.Windows.Forms.DialogResult dialog = MessageBox.Show("This action will save the emails in the draft folder, this action cannot be undone, are you sure you want to continue?", "Save emails confirm", MessageBoxButtons.YesNo);
             if (dialog == System.Windows.Forms.DialogResult.Yes)
             {
 
