@@ -264,9 +264,17 @@ namespace MassAttachEmail
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
+            System.Windows.Forms.DialogResult dialog = MessageBox.Show("are you sure you want to continue?", "Change default settings confirm", MessageBoxButtons.YesNo);
+            if (dialog == System.Windows.Forms.DialogResult.Yes)
+            {
+                Properties.Settings.Default.EmailBody = (string)tbBody.Text;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("Settings updated successfully");
+            }
+            else
+            {
 
-            Properties.Settings.Default.EmailBody = (string)tbBody.Text;
-            Properties.Settings.Default.Save();
+            }
 
             //Properties.Settings.Default.EmailSubject = tbSubject.Text;
             //Properties.Settings.Default.Save();
