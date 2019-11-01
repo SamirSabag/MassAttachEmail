@@ -59,43 +59,5 @@ namespace MassAttachEmail.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap abstract_background_with_gradient_halftone_effect_23_2148222851 {
-            get {
-                object obj = ResourceManager.GetObject("abstract-background-with-gradient-halftone-effect_23-2148222851", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap blue_gradient_background {
-            get {
-                object obj = ResourceManager.GetObject("blue-gradient-background", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default value for body.
-        /// </summary>
-        internal static string EmailBody {
-            get {
-                return ResourceManager.GetString("EmailBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default value for subject.
-        /// </summary>
-        internal static string EmailSubject {
-            get {
-                return ResourceManager.GetString("EmailSubject", resourceCulture);
-            }
-        }
     }
 }

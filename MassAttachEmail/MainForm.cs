@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using System.Reflection;
 
+
 namespace MassAttachEmail
 {
     public partial class MainForm : Form
@@ -37,7 +38,7 @@ namespace MassAttachEmail
             
             signature = File.OpenText(path + "\\" + cbSelectSignature.Text.ToString()).ReadToEnd();
         }
-        public void SendEMailThroughOutlook(string fileName, string filePath, string email)
+        public void SendEMailThroughOutlook(string fileName, string filePath, string subject, string email)
         {
             try
             {
@@ -57,7 +58,7 @@ namespace MassAttachEmail
                 Outlook.Attachment oAttach = oMsg.Attachments.Add
                                              (filePath + "\\" + fileName, iAttachType, iPosition, sDisplayName);                
                 //Subject line
-                oMsg.Subject = tbSubject.Text;
+                oMsg.Subject = subject + " " + fileName;
                 // Add a recipient.
                 Outlook.Recipients oRecips = (Outlook.Recipients)oMsg.Recipients;
                 // Change the recipient in the next line if necessary.
@@ -70,6 +71,8 @@ namespace MassAttachEmail
                 oRecips = null;
                 oMsg = null;
                 oApp = null;
+                txtLoggText.Text += "email sent -> File:" + fileName +" FilePath: " + filePath + " to: " + email + "\r\n";
+
             }//end of try block
             catch (Exception ex)
             {
@@ -77,15 +80,16 @@ namespace MassAttachEmail
 
             }//end of catch
         }//end of Email Method
-        public void SaveEMailThroughOutlook(string fileName, string filePath, string email)
+        public void SaveEMailThroughOutlook(string fileName, string filePath, string subject, string email)
         {
             try
             {
+
                 // Create the Outlook application.
                 Outlook.Application oApp = new Outlook.Application();
                 // Create a new mail item.
-                Outlook.MailItem oMsg = (Outlook.MailItem)oApp.CreateItem(Outlook.OlItemType.olMailItem);
-                // Set HTMLBody.                
+                Outlook.MailItem oMsg = oApp.CreateItem(Outlook.OlItemType.olMailItem);
+                // Set HTMLBody. 
                 //add the body of the email
                 oMsg.HTMLBody = tbBody.Text + "\r\n" + signature;
                 //Add an attachment.
@@ -94,9 +98,9 @@ namespace MassAttachEmail
                 int iAttachType = (int)Outlook.OlAttachmentType.olByValue;
                 //now attached the file
                 Outlook.Attachment oAttach = oMsg.Attachments.Add
-                                             (filePath, iAttachType, iPosition, sDisplayName);
+                                             (filePath + "\\" + fileName, iAttachType, iPosition, sDisplayName);
                 //Subject line
-                oMsg.Subject = tbSubject.Text + " " + fileName+".pdf";
+                oMsg.Subject = subject + " " + fileName;
                 // Add a recipient.
                 Outlook.Recipients oRecips = (Outlook.Recipients)oMsg.Recipients;
                 // Change the recipient in the next line if necessary.
@@ -109,10 +113,13 @@ namespace MassAttachEmail
                 oRecips = null;
                 oMsg = null;
                 oApp = null;
+                txtLoggText.Text += "email sent -> File:" + fileName + " FilePath: " + filePath + " to: " + email + "\r\n";
+
             }//end of try block
             catch (Exception ex)
             {
                 txtLoggText.Text += "error: " + ex.Message + "\r\n";
+
             }//end of catch
         }//end of Email Method
 
@@ -210,62 +217,58 @@ namespace MassAttachEmail
 
         private void BtnSendEmails_Click(object sender, EventArgs e)
         {
-            string fileName;
-            string filePath;
-            string email;
-            string subject;
-            for (int i = 0; i < dtMapping.Rows.Count; i++)
+            System.Windows.Forms.DialogResult dialog = MessageBox.Show("This action will send the emails to the APs contained in this report, this action cannot be undone, are you sure you want to continue?", "Send emails confirm", MessageBoxButtons.YesNo);
+            if (dialog == System.Windows.Forms.DialogResult.Yes)
             {
-                fileName = dtMapping.Rows[i][0].ToString();
-                filePath = dtMapping.Rows[i][1].ToString();
-                email = dtMapping.Rows[i][2].ToString();
-                subject = dtMapping.Rows[i][3].ToString();
-
-                var files = Directory
-                .EnumerateFiles(filePath, "*", SearchOption.AllDirectories)
-                .Select(Path.GetFileName).ToList(); // <-- note you can shorten the lambda
-
-                foreach (var file in files)
+                string fileName;
+                string filePath;
+                string email;
+                string subject;
+                for (int i = 0; i < dtMapping.Rows.Count; i++)
                 {
-                    SendEMailThroughOutlook(file, filePath, "samir.sabag.olague@hp.com");
+                    try
+                    {
+                        fileName = dtMapping.Rows[i][0].ToString();
+                        filePath = dtMapping.Rows[i][1].ToString();
+                        subject = dtMapping.Rows[i][3].ToString();
+                        email = dtMapping.Rows[i][2].ToString();
+
+
+                        var files = Directory
+                        .EnumerateFiles(filePath, "*", SearchOption.AllDirectories)
+                        .Select(Path.GetFileName).ToList(); // <-- note you can shorten the lambda
+
+                        if (files.Count > 0)
+                        {
+                            foreach (var file in files)
+                            {
+                                SendEMailThroughOutlook(file, filePath, subject, email);
+                            }
+                        }
+                        else
+                        {
+                            txtLoggText.Text += "No files found in folder: " + filePath + " \r\n";
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        txtLoggText.Text += "error: " + ex.Message + "\r\n";
+                    }
                 }
-
-
-                
             }
-
-            //try
-            //{
-            //    SendEMailThroughOutlook("9008879949", @"C:\Packages\Folder1\9008879949.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //    SendEMailThroughOutlook("923816", @"C:\Packages\Folder1\923816.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //    SendEMailThroughOutlook("3", @"C:\Packages\Folder2\3.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //    SendEMailThroughOutlook("4", @"C:\Packages\Folder2\4.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //    SendEMailThroughOutlook("5", @"C:\Packages\Folder3\5.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //    SendEMailThroughOutlook("6", @"C:\Packages\Folder3\6.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //    SendEMailThroughOutlook("7", @"C:\Packages\Folder4\7.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //    SendEMailThroughOutlook("8", @"C:\Packages\Folder4\8.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //    SendEMailThroughOutlook("9", @"C:\Packages\Folder5\9.PDF", "samir.sabag.olague@gmail.com");
-            //    txtLoggText.Text += "Email sent \r\n";
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
-
+            else
+            {
+                //  Nothing to do
+            }             
         }
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            //Properties.Settings.Default.EmailBody = tbBody.Text;
-            //Properties.Settings.Default.Save();
+
+
+            //Properties.Settings.Default.EmailBody = (string)tbBody.Text;
+            Properties.Settings.Default.Save();
 
             //Properties.Settings.Default.EmailSubject = tbSubject.Text;
             //Properties.Settings.Default.Save();
@@ -276,31 +279,43 @@ namespace MassAttachEmail
             System.Windows.Forms.DialogResult dialog = MessageBox.Show("This action will send the emails to the APs contained in this report, this action cannot be undone, are you sure you want to continue?", "Send emails confirm", MessageBoxButtons.YesNo);
             if (dialog == System.Windows.Forms.DialogResult.Yes)
             {
-                try
-                {
-                    SaveEMailThroughOutlook("9008879949", @"C:\Packages\Folder1\9008879949.PDF", "samir.sabag.olague@gmail.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                    SaveEMailThroughOutlook("923816", @"C:\Packages\Folder1\923816.PDF", "samir.sabag.olague@gmail.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                    SaveEMailThroughOutlook("3", @"C:\Packages\Folder2\3.PDF", "samir.sabag.olague@hp.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                    SaveEMailThroughOutlook("4", @"C:\Packages\Folder2\4.PDF", "samir.sabag.olague@hp.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                    SaveEMailThroughOutlook("5", @"C:\Packages\Folder3\5.PDF", "samir.sabag.olague@hp.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                    SaveEMailThroughOutlook("6", @"C:\Packages\Folder3\6.PDF", "samir.sabag.olague@hp.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                    SaveEMailThroughOutlook("7", @"C:\Packages\Folder4\7.PDF", "samir.sabag.olague@hp.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                    SaveEMailThroughOutlook("8", @"C:\Packages\Folder4\8.PDF", "samir.sabag.olague@hp.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                    SaveEMailThroughOutlook("9", @"C:\Packages\Folder5\9.PDF", "samir.sabag.olague@hp.com");
-                    txtLoggText.Text += "Email saved \r\n";
-                }
-                catch (Exception)
-                {
 
-                    throw;
+                string fileName;
+                string filePath;
+                string email;
+                string subject;
+                for (int i = 0; i < dtMapping.Rows.Count -1; i++)
+                {
+                    try
+                    {
+                        fileName = dtMapping.Rows[i][0].ToString();
+                        filePath = dtMapping.Rows[i][1].ToString();
+                        subject = dtMapping.Rows[i][3].ToString();
+                        email = dtMapping.Rows[i][2].ToString();
+
+
+                        var files = Directory
+                        .EnumerateFiles(filePath, "*", SearchOption.AllDirectories)
+                        .Select(Path.GetFileName).ToList(); // <-- note you can shorten the lambda
+
+                        if (files.Count > 0)
+                        {
+                            foreach (var file in files)
+                            {
+                                SaveEMailThroughOutlook(file, filePath, subject, email);
+                            }
+                        }
+                        else
+                        {
+                            txtLoggText.Text += "No files found in folder: " + filePath + " \r\n";
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        txtLoggText.Text += "error: " + ex.Message + "\r\n";
+                    }
+
                 }
             }
             else
