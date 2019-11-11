@@ -8,5 +8,11 @@
     <Setting Name="EmailSubject" Type="System.String" Scope="User">
       <Value Profile="(Default)">Default value for subject</Value>
     </Setting>
+    <Setting Name="colorFontEmail" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">DeepSkyBlue</Value>
+    </Setting>
+    <Setting Name="fontEmail" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">HP Simplified, 9.749999pt, style=Italic</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

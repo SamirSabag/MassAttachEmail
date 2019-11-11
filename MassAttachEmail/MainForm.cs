@@ -12,6 +12,8 @@ using System.Windows.Forms;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using System.Reflection;
 
+
+
 namespace MassAttachEmail
 {
     public partial class MainForm : Form
@@ -26,7 +28,7 @@ namespace MassAttachEmail
         {
             InitializeComponent();
             txtLoggText.Text += "Upload the mapping table to start \r\n";
-            tbBody.Text = emailBody;
+            richTextBox1.Text = emailBody;
             tbSubject.Text = emailSubject;
             path = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Microsoft\Signatures";
             var filenames = Directory
@@ -36,7 +38,13 @@ namespace MassAttachEmail
             wbSignDisplay.Navigate(path + "\\" + cbSelectSignature.SelectedItem.ToString());
             
             signature = File.OpenText(path + "\\" + cbSelectSignature.Text.ToString()).ReadToEnd();
-        }
+            richTextBox1.SelectAll();
+            richTextBox1.Font = Properties.Settings.Default.fontEmail;
+            richTextBox1.ForeColor = Properties.Settings.Default.colorFontEmail;
+            //CreateItemFromTemplate();
+       
+
+            }
         public void SendEMailThroughOutlook(string fileName, string filePath, string subject, string email)
         {
             try
@@ -48,7 +56,8 @@ namespace MassAttachEmail
                 Outlook.MailItem oMsg = oApp.CreateItem(Outlook.OlItemType.olMailItem);
                 // Set HTMLBody. 
                 //add the body of the email
-                oMsg.HTMLBody = tbBody.Text + "\r\n" +signature;
+                string htmlFormat = TextToHTML(richTextBox1.Text);
+                oMsg.HTMLBody = richTextBox1.Text + "\r\n" +signature;
                 //Add an attachment.
                 String sDisplayName = fileName;
                 int iPosition = (int)oMsg.Body.Length + 1;
@@ -61,12 +70,13 @@ namespace MassAttachEmail
                 // Add a recipient.
                 Outlook.Recipients oRecips = (Outlook.Recipients)oMsg.Recipients;
                 // Change the recipient in the next line if necessary.
-                Outlook.Recipient oRecip = (Outlook.Recipient)oRecips.Add(email);
-                oRecip.Resolve();
+                //Outlook.Recipient oRecip = (Outlook.Recipient)oRecips.Add(email);
+                oMsg.To = email;
+                //oRecip.Resolve();
                 // Send.
                 oMsg.Send();
                 // Clean up.
-                oRecip = null;
+                //oRecip = null;
                 oRecips = null;
                 oMsg = null;
                 oApp = null;
@@ -79,6 +89,14 @@ namespace MassAttachEmail
 
             }//end of catch
         }//end of Email Method
+
+        private string TextToHTML(string text)
+        {
+            string html;
+            
+                return text;
+        }
+
         public void SaveEMailThroughOutlook(string fileName, string filePath, string subject, string email)
         {
             try
@@ -90,7 +108,7 @@ namespace MassAttachEmail
                 Outlook.MailItem oMsg = oApp.CreateItem(Outlook.OlItemType.olMailItem);
                 // Set HTMLBody. 
                 //add the body of the email
-                oMsg.HTMLBody = tbBody.Text + "\r\n" + signature;
+                oMsg.HTMLBody = richTextBox1.Text + "\r\n" + signature;
                 //Add an attachment.
                 String sDisplayName = fileName;
                 int iPosition = (int)oMsg.Body.Length + 1;
@@ -126,6 +144,7 @@ namespace MassAttachEmail
         {
             string inputPath = GetFilePath();
             dtMapping = ExcelFileToDataGridView("Mapping", inputPath);
+            
             dgvDisplay.DataSource = dtMapping;
         }
 
@@ -136,7 +155,7 @@ namespace MassAttachEmail
             try
             {
                 using (OleDbConnection conn = new OleDbConnection())
-                {
+                { 
                     conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0; Data Source='" + path + "';Extended Properties=\"Excel 12.0;HDR=YES;\"";
                     using (OleDbCommand comm = new OleDbCommand())
                     {
@@ -154,6 +173,11 @@ namespace MassAttachEmail
                     btnSaveEmails.Enabled = true;
                     btnSendEmails.Enabled = true;
 
+                    dataTable = dataTable.Rows
+                    .Cast<DataRow>()
+                    .Where(row => !row.ItemArray.All(field => field is DBNull ||
+                                                     string.IsNullOrWhiteSpace(field as string)))
+                    .CopyToDataTable();
                     return dataTable;
                 }
             }
@@ -232,21 +256,24 @@ namespace MassAttachEmail
                         subject = dtMapping.Rows[i][3].ToString();
                         email = dtMapping.Rows[i][2].ToString();
 
-
-                        var files = Directory
-                        .EnumerateFiles(filePath, "*", SearchOption.AllDirectories)
-                        .Select(Path.GetFileName).ToList(); // <-- note you can shorten the lambda
-
-                        if (files.Count > 0)
+                        if (filePath != null)
                         {
-                            foreach (var file in files)
+
+                            var files = Directory
+                            .EnumerateFiles(filePath, "*", SearchOption.AllDirectories)
+                            .Select(Path.GetFileName).ToList(); // <-- note you can shorten the lambda
+
+                            if (files.Count > 0)
                             {
-                                SendEMailThroughOutlook(file, filePath, subject, email);
+                                foreach (var file in files)
+                                {
+                                    SendEMailThroughOutlook(file, filePath, subject, email);
+                                }
                             }
-                        }
-                        else
-                        {
-                            txtLoggText.Text += "No files found in folder: " + filePath + " \r\n";
+                            else
+                            {
+                                txtLoggText.Text += "No files found in folder: " + filePath + " \r\n";
+                            }
                         }
 
                     }
@@ -267,7 +294,7 @@ namespace MassAttachEmail
             System.Windows.Forms.DialogResult dialog = MessageBox.Show("are you sure you want to continue?", "Change default settings confirm", MessageBoxButtons.YesNo);
             if (dialog == System.Windows.Forms.DialogResult.Yes)
             {
-                Properties.Settings.Default.EmailBody = (string)tbBody.Text;
+                Properties.Settings.Default.EmailBody = (string)richTextBox1.Text;
                 Properties.Settings.Default.Save();
                 MessageBox.Show("Settings updated successfully");
             }
@@ -328,6 +355,23 @@ namespace MassAttachEmail
             {
                 //nothing to do
             }
+        }
+        private void CreateItemFromTemplate()
+        {
+            // Create the Outlook application.
+            Outlook.Application oApp = new Outlook.Application();
+            
+            Outlook.Folder folder =
+                oApp.Session.GetDefaultFolder(
+                Outlook.OlDefaultFolders.olFolderDrafts) as Outlook.Folder;
+            Outlook.MailItem mail =
+                oApp.CreateItemFromTemplate(
+                @"C:\Users\sabagsa\AppData\Roaming\Microsoft\Templates\TemplateOutlook.oft", folder) as Outlook.MailItem;
+            mail.Subject = "Congratulations";
+            mail.Attachments.Add(@"C:\Users\sabagsa\Pictures\169387.jpg",
+            Outlook.OlAttachmentType.olByValue, Type.Missing,
+            Type.Missing);
+            mail.Save();
         }
     }
 }

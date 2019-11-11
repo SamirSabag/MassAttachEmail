@@ -22,7 +22,7 @@ namespace MassAttachEmail.Properties {
                 return defaultInstance;
             }
         }
-                                                                    
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Default value for body")]
@@ -44,6 +44,30 @@ namespace MassAttachEmail.Properties {
             }
             set {
                 this["EmailSubject"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DeepSkyBlue")]
+        public global::System.Drawing.Color colorFontEmail {
+            get {
+                return ((global::System.Drawing.Color)(this["colorFontEmail"]));
+            }
+            set {
+                this["colorFontEmail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("HP Simplified, 9.749999pt, style=Italic")]
+        public global::System.Drawing.Font fontEmail {
+            get {
+                return ((global::System.Drawing.Font)(this["fontEmail"]));
+            }
+            set {
+                this["fontEmail"] = value;
             }
         }
     }
