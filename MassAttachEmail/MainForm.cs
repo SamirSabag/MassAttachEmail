@@ -56,7 +56,7 @@ namespace MassAttachEmail
                 Outlook.MailItem oMsg = oApp.CreateItem(Outlook.OlItemType.olMailItem);
                 // Set HTMLBody. 
                 //add the body of the email
-                string htmlFormat = TextToHTML(richTextBox1.Text);
+                string htmlFormat = richTextBox1.Text;
                 oMsg.HTMLBody = richTextBox1.Text + "\r\n" +signature;                
                 //Add an attachment.
                 String sDisplayName = fileName;
@@ -90,13 +90,7 @@ namespace MassAttachEmail
             }//end of catch
         }//end of Email Method
 
-        private string TextToHTML(string text)
-        {
-            string html;
-            
-                return text;
-        }
-
+        
         public void SaveEMailThroughOutlook(string fileName, string filePath, string subject, string email)
         {
             try
@@ -237,6 +231,16 @@ namespace MassAttachEmail
             wbSignDisplay.Navigate(path + "\\" + cbSelectSignature.Text.ToString());
             wbSignDisplay.Update();
             signature = File.OpenText(path + "\\" + cbSelectSignature.Text.ToString()).ReadToEnd();
+
+            string SigString = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Microsoft\Signatures\" + cbSelectSignature.SelectedItem;
+
+            string G_Signature = File.OpenText(SigString).ReadToEnd();
+
+            G_Signature = G_Signature.Replace("�", "'");
+            string selectedSignature = cbSelectSignature.SelectedItem.ToString();
+            
+            G_Signature = G_Signature.Replace("src=\"" , "src=\"file:/" + "C:/Users/" +  Environment.UserName + "/AppData/Roaming/Microsoft/Signatures/");
+            signature = G_Signature;
         }
 
         private void BtnSendEmails_Click(object sender, EventArgs e)
