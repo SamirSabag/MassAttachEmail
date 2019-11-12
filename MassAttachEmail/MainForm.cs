@@ -57,7 +57,7 @@ namespace MassAttachEmail
                 // Set HTMLBody. 
                 //add the body of the email
                 string htmlFormat = TextToHTML(richTextBox1.Text);
-                oMsg.HTMLBody = richTextBox1.Text + "\r\n" +signature;
+                oMsg.HTMLBody = richTextBox1.Text + "\r\n" +signature;                
                 //Add an attachment.
                 String sDisplayName = fileName;
                 int iPosition = (int)oMsg.Body.Length + 1;
@@ -108,7 +108,7 @@ namespace MassAttachEmail
                 Outlook.MailItem oMsg = oApp.CreateItem(Outlook.OlItemType.olMailItem);
                 // Set HTMLBody. 
                 //add the body of the email
-                oMsg.HTMLBody = richTextBox1.Text + "\r\n" + signature;
+                oMsg.HTMLBody = PlainTextToHTML(richTextBox1.Text) + "\r\n" + signature;
                 //Add an attachment.
                 String sDisplayName = fileName;
                 int iPosition = (int)oMsg.Body.Length + 1;
@@ -124,7 +124,7 @@ namespace MassAttachEmail
                 Outlook.Recipient oRecip = (Outlook.Recipient)oRecips.Add(email);
                 oRecip.Resolve();
                 // Send.
-                oMsg.Save();
+                oMsg.Save();               
                 // Clean up.
                 oRecip = null;
                 oRecips = null;
@@ -236,6 +236,7 @@ namespace MassAttachEmail
             path = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Microsoft\Signatures";
             wbSignDisplay.Navigate(path + "\\" + cbSelectSignature.Text.ToString());
             wbSignDisplay.Update();
+            signature = File.OpenText(path + "\\" + cbSelectSignature.Text.ToString()).ReadToEnd();
         }
 
         private void BtnSendEmails_Click(object sender, EventArgs e)
@@ -317,7 +318,7 @@ namespace MassAttachEmail
                 string filePath;
                 string email;
                 string subject;
-                for (int i = 0; i < dtMapping.Rows.Count -1; i++)
+                for (int i = 0; i < dtMapping.Rows.Count; i++)
                 {
                     try
                     {
@@ -373,5 +374,23 @@ namespace MassAttachEmail
             Type.Missing);
             mail.Save();
         }
+        protected string PlainTextToHTML(string bodyMessage)
+        {
+            StringBuilder strHTMLBuilder = new StringBuilder();
+            strHTMLBuilder.Append("<html >");
+            strHTMLBuilder.Append("<head>");
+            strHTMLBuilder.Append("</head>");
+            strHTMLBuilder.Append("<body style='font-family:HP Simplified Light; font-size: Medium; color: #0096D6'>");
+            strHTMLBuilder.Append(bodyMessage);
+            strHTMLBuilder.Append("</body>");
+            strHTMLBuilder.Append("<br/>");
+            strHTMLBuilder.Append("</html>");
+
+            string Htmltext = strHTMLBuilder.ToString();
+
+            return Htmltext;
+
+        }
+
     }
 }
