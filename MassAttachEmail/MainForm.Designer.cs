@@ -33,8 +33,10 @@
             this.tabPage = new System.Windows.Forms.TabControl();
             this.tabFormat = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.tbSubject = new System.Windows.Forms.TextBox();
-            this.lblSubject = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.TextBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.lblEmailBody = new System.Windows.Forms.Label();
+            this.txtLoggText = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.cbSelectSignature = new System.Windows.Forms.ComboBox();
@@ -47,10 +49,6 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.btnSaveEmails = new System.Windows.Forms.Button();
             this.btnSendEmails = new System.Windows.Forms.Button();
-            this.lblEmailBody = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.TextBox();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.txtLoggText = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabPage.SuspendLayout();
             this.tabFormat.SuspendLayout();
@@ -76,7 +74,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(744, 600);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 607);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tabPage
@@ -85,10 +83,10 @@
             this.tabPage.Controls.Add(this.tabMapping);
             this.tabPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabPage.Font = new System.Drawing.Font("HP Simplified", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage.Location = new System.Drawing.Point(17, 3);
+            this.tabPage.Location = new System.Drawing.Point(18, 3);
             this.tabPage.Name = "tabPage";
             this.tabPage.SelectedIndex = 0;
-            this.tabPage.Size = new System.Drawing.Size(724, 534);
+            this.tabPage.Size = new System.Drawing.Size(779, 540);
             this.tabPage.TabIndex = 0;
             // 
             // tabFormat
@@ -97,7 +95,7 @@
             this.tabFormat.Location = new System.Drawing.Point(4, 29);
             this.tabFormat.Name = "tabFormat";
             this.tabFormat.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFormat.Size = new System.Drawing.Size(716, 501);
+            this.tabFormat.Size = new System.Drawing.Size(771, 507);
             this.tabFormat.TabIndex = 0;
             this.tabFormat.Text = "Format";
             this.tabFormat.UseVisualStyleBackColor = true;
@@ -107,11 +105,9 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.23588F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.76412F));
-            this.tableLayoutPanel3.Controls.Add(this.tbSubject, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.richTextBox1, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.btnUpdate, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.lblEmailBody, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.lblSubject, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.txtLoggText, 1, 4);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.wbSignDisplay, 1, 2);
@@ -119,35 +115,62 @@
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.677525F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.45277F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.72881F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2.439024F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.43903F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.58537F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2.234637F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.27374F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 135F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(710, 495);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.402439F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(765, 501);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
-            // tbSubject
+            // richTextBox1
             // 
-            this.tbSubject.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.tbSubject.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbSubject.Location = new System.Drawing.Point(210, 3);
-            this.tbSubject.Name = "tbSubject";
-            this.tbSubject.Size = new System.Drawing.Size(350, 26);
-            this.tbSubject.TabIndex = 9;
-            this.tbSubject.Visible = false;
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(226, 11);
+            this.richTextBox1.Multiline = true;
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(536, 185);
+            this.richTextBox1.TabIndex = 8;
             // 
-            // lblSubject
+            // btnUpdate
             // 
-            this.lblSubject.AutoSize = true;
-            this.lblSubject.Font = new System.Drawing.Font("HP Simplified", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSubject.Location = new System.Drawing.Point(3, 0);
-            this.lblSubject.Name = "lblSubject";
-            this.lblSubject.Size = new System.Drawing.Size(79, 16);
-            this.lblSubject.TabIndex = 5;
-            this.lblSubject.Text = "Email subject";
-            this.lblSubject.Visible = false;
+            this.btnUpdate.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.tableLayoutPanel3.SetColumnSpan(this.btnUpdate, 2);
+            this.btnUpdate.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnUpdate.Location = new System.Drawing.Point(3, 366);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(131, 26);
+            this.btnUpdate.TabIndex = 0;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
+            // 
+            // lblEmailBody
+            // 
+            this.lblEmailBody.AutoSize = true;
+            this.lblEmailBody.Font = new System.Drawing.Font("HP Simplified", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmailBody.Location = new System.Drawing.Point(3, 8);
+            this.lblEmailBody.Name = "lblEmailBody";
+            this.lblEmailBody.Size = new System.Drawing.Size(58, 16);
+            this.lblEmailBody.TabIndex = 5;
+            this.lblEmailBody.Text = "Mail body";
+            // 
+            // txtLoggText
+            // 
+            this.txtLoggText.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.tableLayoutPanel3.SetColumnSpan(this.txtLoggText, 2);
+            this.txtLoggText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLoggText.Font = new System.Drawing.Font("HP Simplified Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLoggText.Location = new System.Drawing.Point(3, 398);
+            this.txtLoggText.Multiline = true;
+            this.txtLoggText.Name = "txtLoggText";
+            this.txtLoggText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtLoggText.Size = new System.Drawing.Size(759, 100);
+            this.txtLoggText.TabIndex = 6;
             // 
             // tableLayoutPanel4
             // 
@@ -157,21 +180,21 @@
             this.tableLayoutPanel4.Controls.Add(this.cbSelectSignature, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.lblSignature, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 110);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 202);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(201, 168);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(217, 127);
             this.tableLayoutPanel4.TabIndex = 12;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("HP Simplified", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 56);
+            this.label2.Location = new System.Drawing.Point(3, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(94, 16);
             this.label2.TabIndex = 4;
@@ -182,29 +205,32 @@
             this.cbSelectSignature.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.cbSelectSignature.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbSelectSignature.FormattingEnabled = true;
-            this.cbSelectSignature.Location = new System.Drawing.Point(3, 115);
+            this.cbSelectSignature.Location = new System.Drawing.Point(3, 87);
             this.cbSelectSignature.Name = "cbSelectSignature";
-            this.cbSelectSignature.Size = new System.Drawing.Size(195, 28);
+            this.cbSelectSignature.Size = new System.Drawing.Size(211, 28);
             this.cbSelectSignature.TabIndex = 3;
             this.cbSelectSignature.SelectedIndexChanged += new System.EventHandler(this.CbSelectSignature_SelectedIndexChanged);
             // 
             // lblSignature
             // 
             this.lblSignature.AutoSize = true;
+            this.lblSignature.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblSignature.Font = new System.Drawing.Font("HP Simplified", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSignature.Location = new System.Drawing.Point(3, 0);
             this.lblSignature.Name = "lblSignature";
-            this.lblSignature.Size = new System.Drawing.Size(92, 16);
+            this.lblSignature.Size = new System.Drawing.Size(211, 16);
             this.lblSignature.TabIndex = 0;
-            this.lblSignature.Text = "Email signature";
+            this.lblSignature.Text = "Mail signature";
+            this.lblSignature.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // wbSignDisplay
             // 
             this.wbSignDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.wbSignDisplay.Location = new System.Drawing.Point(210, 110);
+            this.wbSignDisplay.Location = new System.Drawing.Point(226, 202);
             this.wbSignDisplay.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbSignDisplay.Name = "wbSignDisplay";
-            this.wbSignDisplay.Size = new System.Drawing.Size(497, 168);
+            this.tableLayoutPanel3.SetRowSpan(this.wbSignDisplay, 3);
+            this.wbSignDisplay.Size = new System.Drawing.Size(536, 158);
             this.wbSignDisplay.TabIndex = 13;
             // 
             // tabMapping
@@ -213,7 +239,7 @@
             this.tabMapping.Location = new System.Drawing.Point(4, 29);
             this.tabMapping.Name = "tabMapping";
             this.tabMapping.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMapping.Size = new System.Drawing.Size(608, 501);
+            this.tabMapping.Size = new System.Drawing.Size(771, 507);
             this.tabMapping.TabIndex = 1;
             this.tabMapping.Text = "Mapping";
             this.tabMapping.UseVisualStyleBackColor = true;
@@ -231,18 +257,20 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(602, 495);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(765, 501);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // btnLoadMappingTable
             // 
+            this.btnLoadMappingTable.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.btnLoadMappingTable.Font = new System.Drawing.Font("HP Simplified", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoadMappingTable.Location = new System.Drawing.Point(3, 374);
+            this.btnLoadMappingTable.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnLoadMappingTable.Location = new System.Drawing.Point(3, 378);
             this.btnLoadMappingTable.Name = "btnLoadMappingTable";
             this.btnLoadMappingTable.Size = new System.Drawing.Size(166, 33);
             this.btnLoadMappingTable.TabIndex = 6;
             this.btnLoadMappingTable.Text = "Load mapping table";
-            this.btnLoadMappingTable.UseVisualStyleBackColor = true;
+            this.btnLoadMappingTable.UseVisualStyleBackColor = false;
             this.btnLoadMappingTable.Click += new System.EventHandler(this.BtnLoadMappingTable_Click);
             // 
             // dgvDisplay
@@ -253,7 +281,7 @@
             this.dgvDisplay.Location = new System.Drawing.Point(3, 3);
             this.dgvDisplay.Name = "dgvDisplay";
             this.dgvDisplay.RowTemplate.Height = 24;
-            this.dgvDisplay.Size = new System.Drawing.Size(596, 365);
+            this.dgvDisplay.Size = new System.Drawing.Size(759, 369);
             this.dgvDisplay.TabIndex = 2;
             // 
             // tableLayoutPanel5
@@ -267,11 +295,11 @@
             this.tableLayoutPanel5.Controls.Add(this.btnSaveEmails, 3, 0);
             this.tableLayoutPanel5.Controls.Add(this.btnSendEmails, 4, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(17, 543);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(18, 549);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(724, 54);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(779, 55);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // btnSaveEmails
@@ -280,11 +308,11 @@
             this.btnSaveEmails.Enabled = false;
             this.btnSaveEmails.Font = new System.Drawing.Font("HP Simplified", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveEmails.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.btnSaveEmails.Location = new System.Drawing.Point(435, 3);
+            this.btnSaveEmails.Location = new System.Drawing.Point(468, 3);
             this.btnSaveEmails.Name = "btnSaveEmails";
             this.btnSaveEmails.Size = new System.Drawing.Size(95, 37);
             this.btnSaveEmails.TabIndex = 19;
-            this.btnSaveEmails.Text = "Save emails";
+            this.btnSaveEmails.Text = "Save drafts";
             this.btnSaveEmails.UseVisualStyleBackColor = false;
             this.btnSaveEmails.Click += new System.EventHandler(this.BtnSaveEmails_Click);
             // 
@@ -294,66 +322,20 @@
             this.btnSendEmails.Enabled = false;
             this.btnSendEmails.Font = new System.Drawing.Font("HP Simplified", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSendEmails.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.btnSendEmails.Location = new System.Drawing.Point(579, 3);
+            this.btnSendEmails.Location = new System.Drawing.Point(623, 3);
             this.btnSendEmails.Name = "btnSendEmails";
             this.btnSendEmails.Size = new System.Drawing.Size(99, 37);
             this.btnSendEmails.TabIndex = 14;
-            this.btnSendEmails.Text = "Send emails";
+            this.btnSendEmails.Text = "Send mails";
             this.btnSendEmails.UseVisualStyleBackColor = false;
             this.btnSendEmails.Click += new System.EventHandler(this.BtnSendEmails_Click);
-            // 
-            // lblEmailBody
-            // 
-            this.lblEmailBody.AutoSize = true;
-            this.lblEmailBody.Font = new System.Drawing.Font("HP Simplified", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmailBody.Location = new System.Drawing.Point(3, 23);
-            this.lblEmailBody.Name = "lblEmailBody";
-            this.lblEmailBody.Size = new System.Drawing.Size(65, 16);
-            this.lblEmailBody.TabIndex = 5;
-            this.lblEmailBody.Text = "Email body";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(210, 26);
-            this.richTextBox1.Multiline = true;
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(497, 78);
-            this.richTextBox1.TabIndex = 8;
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.tableLayoutPanel3.SetColumnSpan(this.btnUpdate, 2);
-            this.btnUpdate.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnUpdate.Location = new System.Drawing.Point(3, 292);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(131, 38);
-            this.btnUpdate.TabIndex = 0;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = false;
-            this.btnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
-            // 
-            // txtLoggText
-            // 
-            this.txtLoggText.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.tableLayoutPanel3.SetColumnSpan(this.txtLoggText, 2);
-            this.txtLoggText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLoggText.Font = new System.Drawing.Font("HP Simplified Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLoggText.Location = new System.Drawing.Point(3, 361);
-            this.txtLoggText.Multiline = true;
-            this.txtLoggText.Name = "txtLoggText";
-            this.txtLoggText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLoggText.Size = new System.Drawing.Size(704, 131);
-            this.txtLoggText.TabIndex = 6;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
-            this.ClientSize = new System.Drawing.Size(744, 600);
+            this.ClientSize = new System.Drawing.Size(800, 607);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("HP Simplified", 9.749999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -386,8 +368,6 @@
         private System.Windows.Forms.TabPage tabMapping;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.DataGridView dgvDisplay;
-        private System.Windows.Forms.Label lblSubject;
-        private System.Windows.Forms.TextBox tbSubject;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbSelectSignature;

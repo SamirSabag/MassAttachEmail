@@ -28,8 +28,7 @@ namespace MassAttachEmail
         {
             InitializeComponent();
             txtLoggText.Text += "Upload the mapping table to start \r\n";
-            richTextBox1.Text = emailBody;
-            tbSubject.Text = emailSubject;
+            richTextBox1.Text = emailBody;            
             path = @"C:\Users\" + Environment.UserName + @"\AppData\Roaming\Microsoft\Signatures";
             var filenames = Directory
                 .EnumerateFiles(path, "*htm", SearchOption.AllDirectories)
@@ -57,7 +56,7 @@ namespace MassAttachEmail
                 // Set HTMLBody. 
                 //add the body of the email
                 string htmlFormat = richTextBox1.Text;
-                oMsg.HTMLBody = richTextBox1.Text + "\r\n" +signature;                
+                oMsg.HTMLBody = PlainTextToHTML(richTextBox1.Text) + "\r\n" +signature;                
                 //Add an attachment.
                 String sDisplayName = fileName;
                 int iPosition = (int)oMsg.Body.Length + 1;
@@ -314,7 +313,7 @@ namespace MassAttachEmail
 
         private void BtnSaveEmails_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.DialogResult dialog = MessageBox.Show("This action will save the emails in the draft folder, this action cannot be undone, are you sure you want to continue?", "Save emails confirm", MessageBoxButtons.YesNo);
+            System.Windows.Forms.DialogResult dialog = MessageBox.Show("This action will save the emails in the draft folder, are you sure you want to continue?", "Save emails confirm", MessageBoxButtons.YesNo);
             if (dialog == System.Windows.Forms.DialogResult.Yes)
             {
 
